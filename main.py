@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
+app.secret_key = "admin123"
 
 services = [
     {"name": "Electrician", "contact": "999-111-222"},
@@ -8,7 +9,6 @@ services = [
     {"name": "Carpenter", "contact": "999-555-666"},
 ]
 
-# bookings list
 bookings = []
 
 @app.route("/")
@@ -35,9 +35,23 @@ def booking():
 
     return render_template("index.html", services=services)
 
-# ADMIN PANEL
+# ADMIN LOGIN
+@app.route("/login", methods=["GET","POST"])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        if username == "admin" and password == "1234":
+            session["admin"] = True
+            return redirect("/admin")
+
+    return render_template("login.html")
+
 @app.route("/admin")
 def admin():
+    if not session.get("admin"):
+        return redirect("/login")
     return render_template("admin.html", bookings=bookings)
 
 if __name__ == "__main__":
