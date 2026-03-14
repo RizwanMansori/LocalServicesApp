@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Local Services App</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Welcome to Local Services App!</h1>
-    <p><a href="{{ url_for('signup') }}">Signup</a> | <a href="{{ url_for('add_service') }}">Add Service</a></p>
-    <h2>Available Services:</h2>
+    <h1>Welcome to Local Services App</h1>
+
+    <h2>Available Services</h2>
     <ul>
-        {% for s in services %}
-        <li>
-            <strong>{{ s.title }}</strong> - {{ s.description }} - ₹{{ s.price }}
-        </li>
-        {% else %}
-        <li>No services available</li>
+        {% for service in services %}
+        <li>{{ service.name }} - Contact: {{ service.contact }}</li>
         {% endfor %}
     </ul>
+
+    <h2>Contact Us</h2>
+    {% if success %}
+        <p class="success">Your message has been sent!</p>
+    {% endif %}
+    <form method="post" action="/contact">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Message" required></textarea>
+        <button type="submit">Send</button>
+    </form>
 </body>
 </html>
