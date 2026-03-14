@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, session
+import sqlite3
 
 app = Flask(__name__)
 app.secret_key = "secret"
@@ -9,7 +10,16 @@ services = [
     {"name": "Carpenter", "contact": "999555666"},
 ]
 
-bookings = []
+# DATABASE CREATE
+def init_db():
+    conn = sqlite3.connect("bookings.db")
+    c = conn.cursor()
+    c.execute("""CREATE TABLE IF NOT EXISTS bookings
+                 (name TEXT, phone TEXT, service TEXT, address TEXT)""")
+    conn.commit()
+    conn.close()
+
+init_db()
 
 @app.route("/")
 def home():
@@ -26,12 +36,11 @@ def booking():
     service = request.form["service"]
     address = request.form["address"]
 
-    bookings.append({
-        "name": name,
-        "phone": phone,
-        "service": service,
-        "address": address
-    })
+    conn = sqlite3.connect("bookings.db")
+    c = conn.cursor()
+    c.execute("INSERT INTO bookings VALUES (?,?,?,?)",(name,phone,service,address))
+    conn.commit()
+    conn.close()
 
     return render_template("index.html", services=services)
 
@@ -52,7 +61,13 @@ def admin():
     if not session.get("admin"):
         return redirect("/login")
 
-    return render_template("admin.html", bookings=bookings)
+    conn = sqlite3.connect("bookings.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM bookings")
+    data = c.fetchall()
+    conn.close()
+
+    return render_template("admin.html", bookings=data)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
