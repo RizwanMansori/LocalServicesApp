@@ -1,100 +1,170 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Local Services App</title><style>
+<title>Local Services App</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
 body{
-font-family: Arial;
-margin:0;
-background:#f4f6f9;
-text-align:center;
+    font-family: Arial, sans-serif;
+    margin:0;
+    background:#f4f6f9;
+    text-align:center;
 }
 
 header{
-background:#007BFF;
-color:white;
-padding:15px;
-font-size:24px;
-}
-
-.admin-link{
-margin:10px;
-display:block;
-font-weight:bold;
+    background:#007BFF;
+    color:white;
+    padding:15px;
+    font-size:24px;
 }
 
 .services{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:20px;
-margin:20px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+    margin:20px 0;
 }
 
 .card{
-background:white;
-width:220px;
-padding:20px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
+    background: linear-gradient(145deg, #ffffff, #e6f0ff);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    width: 220px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.25);
+}
+
+.card-header{
+    background:#007BFF;
+    color:white;
+    padding:15px;
+    text-align:center;
+}
+
+.card-body{
+    padding:15px;
+    text-align:center;
+}
+
+.card-body p{
+    margin:10px 0;
+    font-size:14px;
+}
+
+.card-body button{
+    padding:8px 15px;
+    border:none;
+    border-radius:8px;
+    background:#28a745;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+    transition: background 0.3s;
+}
+
+.card-body button:hover{
+    background:#218838;
 }
 
 form{
-margin:20px;
+    margin:20px;
 }
 
-input,textarea,select{
-display:block;
-margin:10px auto;
-padding:10px;
-width:260px;
+input, textarea, select{
+    display:block;
+    margin:10px auto;
+    padding:10px;
+    width:260px;
+    border-radius:5px;
+    border:1px solid #ccc;
 }
 
-button{
-padding:10px 20px;
-background:#007BFF;
-color:white;
-border:none;
-border-radius:5px;
+button.submit-btn{
+    padding:10px 20px;
+    background:#007BFF;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button.submit-btn:hover{
+    background:#0056b3;
 }
 
 .whatsapp{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-color:white;
-padding:15px;
-border-radius:50px;
-text-decoration:none;
-font-weight:bold;
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#25D366;
+    color:white;
+    padding:15px;
+    border-radius:50px;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:16px;
 }
-</style></head><body><header>
-Local Services App
-</header><a href="/admin" class="admin-link">Open Admin Panel</a>
 
-<h2>Available Services</h2><div class="services">{% for service in services %}
+footer{
+    background:#222;
+    color:white;
+    padding:15px;
+    margin-top:30px;
+}
+</style>
+</head>
+<body>
+<header>Local Services App</header>
 
-<div class="card">
-<h3>{{ service.name }}</h3>
-<p>Contact: {{ service.contact }}</p>
-</div>{% endfor %}
+<h2>Available Services</h2>
+<div class="services">
+  {% for service in services %}
+  <div class="card">
+    <div class="card-header">
+      <h3>{{ service.name }}</h3>
+    </div>
+    <div class="card-body">
+      <p>Contact: {{ service.contact }}</p>
+      <button onclick="window.location.href='tel:{{ service.contact }}'">Call</button>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 
-</div><h2>Contact Us</h2>{% if success %}
+<h2>Contact Us</h2>
+{% if success %}
+<p style="color:green;font-weight:bold;">Your message has been sent!</p>
+{% endif %}
+<form method="post" action="/contact">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" placeholder="Message" required></textarea>
+    <button type="submit" class="submit-btn">Send</button>
+</form>
 
-<p>Your message has been sent!</p>
-{% endif %}<form method="post" action="/contact">
-<input type="text" name="name" placeholder="Your Name" required>
-<input type="email" name="email" placeholder="Your Email" required>
-<textarea name="message" placeholder="Message" required></textarea>
-<button type="submit">Send</button>
-</form><h2>Book a Service</h2><form method="post" action="/booking"><input type="text" name="name" placeholder="Your Name" required><input type="tel" name="phone" placeholder="Phone Number" required><select name="service">
-<option>Electrician</option>
-<option>Plumber</option>
-<option>Carpenter</option>
-<option>AC Repair</option>
-</select><input type="text" name="address" placeholder="Your Address" required><button type="submit">Book Now</button>
+<h2>Book a Service</h2>
+<form method="post" action="/booking">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="tel" name="phone" placeholder="Phone Number" required>
+    <select name="service">
+        <option>Electrician</option>
+        <option>Plumber</option>
+        <option>Carpenter</option>
+        <option>AC Repair</option>
+    </select>
+    <input type="text" name="address" placeholder="Your Address" required>
+    <button type="submit" class="submit-btn">Book Now</button>
+</form>
 
-</form><a href="https://wa.me/919193626374" class="whatsapp" target="_blank">
-WhatsApp
-</a></body>
+<a href="https://wa.me/919193626374" class="whatsapp" target="_blank">WhatsApp</a>
+
+<footer>© 2026 Local Services App</footer>
+</body>
 </html>
