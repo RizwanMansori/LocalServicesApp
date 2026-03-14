@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Admin Panel</title>
+
 <style>
 body{
 font-family:Arial;
@@ -25,6 +26,7 @@ background:#007BFF;
 color:white;
 }
 </style>
+
 </head>
 
 <body>
@@ -32,6 +34,7 @@ color:white;
 <h1>Admin Panel - Bookings</h1>
 
 <table>
+
 <tr>
 <th>Name</th>
 <th>Phone</th>
@@ -42,10 +45,10 @@ color:white;
 {% for b in bookings %}
 
 <tr>
-<td>{{ b.name }}</td>
-<td>{{ b.phone }}</td>
-<td>{{ b.service }}</td>
-<td>{{ b.address }}</td>
+<td>{{ b[0] }}</td>
+<td>{{ b[1] }}</td>
+<td>{{ b[2] }}</td>
+<td>{{ b[3] }}</td>
 </tr>
 
 {% endfor %}
