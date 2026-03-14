@@ -2,32 +2,50 @@
 <html>
 <head>
 <title>Admin Panel</title>
+<style>
+body{font-family:Arial;background:#f4f6f9;text-align:center;}
+table{margin:auto;border-collapse:collapse;width:80%;}
+th,td{border:1px solid #ccc;padding:10px;}
+th{background:#007BFF;color:white;}
+button.delete-btn{background:#dc3545;color:white;padding:5px 10px;border:none;border-radius:5px;cursor:pointer;}
+button.delete-btn:hover{background:#c82333;}
+.counts{margin:20px; text-align:center;}
+</style>
 </head>
-<body style="font-family:Arial;text-align:center">
-
+<body>
 <h1>Admin Panel - Bookings</h1>
 
-<table border="1" style="margin:auto">
+<div class="counts">
+<h3>Service-wise Booking Count</h3>
+<ul>
+{% for service,count in counts %}
+<li>{{ service }}: {{ count }}</li>
+{% endfor %}
+</ul>
+</div>
 
+<table>
 <tr>
 <th>Name</th>
 <th>Phone</th>
 <th>Service</th>
 <th>Address</th>
+<th>Action</th>
 </tr>
 
 {% for b in bookings %}
-
 <tr>
-<td>{{ b[0] }}</td>
 <td>{{ b[1] }}</td>
 <td>{{ b[2] }}</td>
 <td>{{ b[3] }}</td>
+<td>{{ b[4] }}</td>
+<td>
+  <form method="get" action="/delete/{{ b[0] }}">
+    <button class="delete-btn">Delete</button>
+  </form>
+</td>
 </tr>
-
 {% endfor %}
-
 </table>
-
 </body>
 </html>
