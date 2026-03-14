@@ -1,12 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, session
 
 app = Flask(__name__)
-app.secret_key = "admin123"
+app.secret_key = "secret"
 
 services = [
-    {"name": "Electrician", "contact": "999-111-222"},
-    {"name": "Plumber", "contact": "999-333-444"},
-    {"name": "Carpenter", "contact": "999-555-666"},
+    {"name": "Electrician", "contact": "999111222"},
+    {"name": "Plumber", "contact": "999333444"},
+    {"name": "Carpenter", "contact": "999555666"},
 ]
 
 bookings = []
@@ -35,7 +35,6 @@ def booking():
 
     return render_template("index.html", services=services)
 
-# ADMIN LOGIN
 @app.route("/login", methods=["GET","POST"])
 def login():
     if request.method == "POST":
@@ -52,6 +51,7 @@ def login():
 def admin():
     if not session.get("admin"):
         return redirect("/login")
+
     return render_template("admin.html", bookings=bookings)
 
 if __name__ == "__main__":
