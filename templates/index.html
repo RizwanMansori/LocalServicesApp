@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Local Services App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to Local Services App!</h1>
+    <p><a href="{{ url_for('signup') }}">Signup</a> | <a href="{{ url_for('add_service') }}">Add Service</a></p>
+    <h2>Available Services:</h2>
+    <ul>
+        {% for s in services %}
+        <li>
+            <strong>{{ s.title }}</strong> - {{ s.description }} - ₹{{ s.price }}
+        </li>
+        {% else %}
+        <li>No services available</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
