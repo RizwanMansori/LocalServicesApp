@@ -28,6 +28,31 @@ def init_db():
 
 init_db()
 
+@app.route("/")
+def home():
+    return render_template("index.html", services=services)
+
+@app.route("/contact", methods=["POST"])
+def contact():
+    return render_template("index.html", services=services, success=True)
+
+@app.route("/booking", methods=["POST"])
+def booking():
+    name = request.form["name"]
+    phone = request.form["phone"]
+    service_name = request.form["service"]
+    address = request.form["address"]
+
+    conn = sqlite3.connect("bookings.db")
+    c = conn.cursor()
+    c.execute("INSERT INTO bookings (name, phone, service, address) VALUES (?, ?, ?, ?)",
+              (name, phone, service_name, address))
+    conn.commit()
+    conn.close()
+
+    # Optionally: WhatsApp URL trigger
+    return render_template("index.html", services=services, booking_success=True)
+
 @app.route("/login", methods=["GET","POST"])
 def login():
     if request.method == "POST":
@@ -38,25 +63,20 @@ def login():
             return redirect("/admin")
     return render_template("login.html")
 
-# Admin panel
 @app.route("/admin")
 def admin():
     if not session.get("admin"):
         return redirect("/login")
-
     conn = sqlite3.connect("bookings.db")
     c = conn.cursor()
     c.execute("SELECT * FROM bookings")
-    bookings = c.fetchall()  # [(id, name, phone, service, address), ...]
+    bookings = c.fetchall()
 
-    # Service-wise count
     c.execute("SELECT service, COUNT(*) FROM bookings GROUP BY service")
-    counts = c.fetchall()  # [('Electrician', 3), ('Plumber',2), ...]
-
+    counts = c.fetchall()
     conn.close()
     return render_template("admin.html", bookings=bookings, counts=counts)
 
-# Delete booking
 @app.route("/delete/<int:id>")
 def delete_booking(id):
     if not session.get("admin"):
@@ -67,3 +87,6 @@ def delete_booking(id):
     conn.commit()
     conn.close()
     return redirect("/admin")
+
+if __name__ == "__main__":
+    app.run(debug=True)
