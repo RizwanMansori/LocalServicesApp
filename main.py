@@ -33,7 +33,7 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        if username == "Rizvan" and password == "0786":
+        if username == "admin" and password == "1234":
             session["admin"] = True
             return redirect("/admin")
     return render_template("login.html")
