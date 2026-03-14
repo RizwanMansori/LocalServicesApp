@@ -8,23 +8,37 @@ services = [
     {"name": "Carpenter", "contact": "999-555-666"},
 ]
 
+# bookings list
+bookings = []
+
 @app.route("/")
 def home():
     return render_template("index.html", services=services)
 
 @app.route("/contact", methods=["POST"])
 def contact():
-    name = request.form.get("name")
-    email = request.form.get("email")
-    message = request.form.get("message")
-    print(name, email, message)
     return render_template("index.html", services=services, success=True)
 
 @app.route("/booking", methods=["POST"])
 def booking():
-    name = request.form.get("name")
-    phone = request.form.get("phone")
-    service = request.form.get("service")
-    address = request.form.get("address")
-    print(name, phone, service, address)
+    name = request.form["name"]
+    phone = request.form["phone"]
+    service = request.form["service"]
+    address = request.form["address"]
+
+    bookings.append({
+        "name": name,
+        "phone": phone,
+        "service": service,
+        "address": address
+    })
+
     return render_template("index.html", services=services)
+
+# ADMIN PANEL
+@app.route("/admin")
+def admin():
+    return render_template("admin.html", bookings=bookings)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=10000)
