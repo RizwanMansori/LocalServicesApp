@@ -16,6 +16,12 @@ padding:15px;
 font-size:24px;
 }
 
+.admin-link{
+margin:10px;
+display:block;
+font-weight:bold;
+}
+
 .services{
 display:flex;
 flex-wrap:wrap;
@@ -64,7 +70,9 @@ font-weight:bold;
 }
 </style></head><body><header>
 Local Services App
-</header><h2>Available Services</h2><div class="services">{% for service in services %}
+</header><a href="/admin" class="admin-link">Open Admin Panel</a>
+
+<h2>Available Services</h2><div class="services">{% for service in services %}
 
 <div class="card">
 <h3>{{ service.name }}</h3>
@@ -79,9 +87,7 @@ Local Services App
 <input type="email" name="email" placeholder="Your Email" required>
 <textarea name="message" placeholder="Message" required></textarea>
 <button type="submit">Send</button>
-</form><h2>Book a Service</h2><form method="post" action="/booking">
-<input type="text" name="name" placeholder="Your Name" required>
-<input type="tel" name="phone" placeholder="Phone Number" required><select name="service">
+</form><h2>Book a Service</h2><form method="post" action="/booking"><input type="text" name="name" placeholder="Your Name" required><input type="tel" name="phone" placeholder="Phone Number" required><select name="service">
 <option>Electrician</option>
 <option>Plumber</option>
 <option>Carpenter</option>
