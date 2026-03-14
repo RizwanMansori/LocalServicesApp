@@ -1,29 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Local Services App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Welcome to Local Services App</h1>
+    <h1>Welcome to Local Services App</h1><h2>Available Services</h2>
+<ul>
+    {% for service in services %}
+    <li>{{ service.name }} - Contact: {{ service.contact }}</li>
+    {% endfor %}
+</ul>
 
-    <h2>Available Services</h2>
-    <ul>
-        {% for service in services %}
-        <li>{{ service.name }} - Contact: {{ service.contact }}</li>
-        {% endfor %}
-    </ul>
+<h2>Contact Us</h2>
+{% if success %}
+    <p class="success">Your message has been sent!</p>
+{% endif %}
+<form method="post" action="/contact">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" placeholder="Message" required></textarea>
+    <button type="submit">Send</button>
+</form>
 
-    <h2>Contact Us</h2>
-    {% if success %}
-        <p class="success">Your message has been sent!</p>
-    {% endif %}
-    <form method="post" action="/contact">
-        <input type="text" name="name" placeholder="Your Name" required>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <textarea name="message" placeholder="Message" required></textarea>
-        <button type="submit">Send</button>
-    </form>
+<!-- WhatsApp Button -->
+<h3>Chat with us on WhatsApp</h3>
+<a href="https://wa.me/919193626374" target="_blank">
+    Chat on WhatsApp
+</a>
+
 </body>
 </html>
