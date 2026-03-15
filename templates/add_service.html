@@ -2,24 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Add Service</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<header>
+    <h1>Add New Service</h1>
+    <a href="/admin" class="back-btn">Back to Admin</a>
+</header>
 
-<header>Add New Service</header>
+<section class="add-service-section">
+    {% if success %}
+    <p class="success">Service "{{ service_name }}" added successfully!</p>
+    {% endif %}
 
-{% if success %}
-<p class="success-msg">Service "{{ service_name }}" added successfully!</p>
-{% endif %}
-
-<form method="post" action="/add_service" class="service-form">
-<input type="text" name="name" placeholder="Service Name" required>
-<input type="text" name="contact" placeholder="Contact Number" required>
-<button type="submit">Add Service</button>
-</form>
-
-<a href="/admin" class="logout-btn">Back to Admin Panel</a>
-
+    <form action="/add_service" method="POST">
+        <input type="text" name="name" placeholder="Service Name" required>
+        <input type="text" name="contact" placeholder="Contact Number" required>
+        <button type="submit">Add Service</button>
+    </form>
+</section>
 </body>
 </html>
