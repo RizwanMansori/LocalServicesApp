@@ -1,157 +1,117 @@
 body {
     font-family: Arial, sans-serif;
-    background: #f0f8ff;
-    text-align: center;
+    background: #f0f4f8;
     margin: 0;
+    padding: 0;
 }
 
 header {
-    background: #007BFF;
+    background: linear-gradient(90deg, #ff7e5f, #feb47b);
     color: white;
-    padding: 25px;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.services {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    margin: 20px;
-}
-
-.card {
-    background: #fff;
-    width: 200px;
     padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-}
-
-.card img {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
-}
-
-input, select, textarea {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: 260px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-button {
-    padding: 10px 25px;
-    background: #FF6F61;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-button:hover {
-    background: #FF3B2E;
-}
-
-.success-msg {
-    color: green;
-    font-weight: bold;
-}
-
-.error-msg {
-    color: #FF4C4C;
-    font-weight: bold;
-}
-
-.whatsapp {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #25D366;
-    color: white;
-    padding: 15px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-/* Admin Table */
-.admin-table {
-    width: 80%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    background:#fff;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-}
-
-.admin-table th, .admin-table td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    text-align:center;
-}
-
-.admin-table th {
-    background: #007BFF;
-    color: white;
-}
-
-.admin-table tr:hover {
-    background: #f1f1f1;
-}
-
-.delete-btn {
-    background: #FF4C4C;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background 0.3s;
-}
-
-.delete-btn:hover {
-    background: #FF1A1A;
-}
-
-.add-service-btn {
-    display: inline-block;
-    margin: 20px;
-    padding: 10px 20px;
-    background: #28A745;
-    color: white;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background 0.3s;
-}
-
-.add-service-btn:hover {
-    background: #1E7E34;
-}
-
-/* Forms */
-.service-form, .login-form, .booking-form {
-    margin: 30px auto;
-    width: 300px;
-    background: #fff;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     text-align: center;
 }
 
-.service-form input, .login-form input, .booking-form input, .booking-form select {
-    margin: 10px auto;
-    width: 90%;
+h1, h2 {
+    margin: 10px 0;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.service-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 15px;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.service-card img {
+    width: 100px;
+    height: 100px;
+}
+
+.service-card button {
+    background: linear-gradient(90deg,#ff7e5f,#feb47b);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.service-card button:hover {
+    opacity: 0.9;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+.delete-btn {
+    background: #ff4d4d;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.add-service-btn, .back-btn, .logout-btn {
+    display: inline-block;
+    margin: 10px;
+    padding: 8px 15px;
+    background: linear-gradient(90deg,#43cea2,#185a9d);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.success {
+    color: green;
+    font-weight: bold;
+    margin: 10px 0;
+}
+.error {
+    color: red;
+    font-weight: bold;
+    margin: 10px 0;
+}
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+input, button {
+    width: 80%;
+    margin: 5px 0;
+    padding: 8px;
 }
