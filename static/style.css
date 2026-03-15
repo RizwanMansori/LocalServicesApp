@@ -41,6 +41,15 @@ header {
     margin-bottom: 10px;
 }
 
+input, select, textarea {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 260px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
 button {
     padding: 10px 25px;
     background: #FF6F61;
@@ -55,17 +64,13 @@ button:hover {
     background: #FF3B2E;
 }
 
-input, textarea, select {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: 260px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
 .success-msg {
     color: green;
+    font-weight: bold;
+}
+
+.error-msg {
+    color: #FF4C4C;
     font-weight: bold;
 }
 
@@ -79,4 +84,74 @@ input, textarea, select {
     border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
+}
+
+/* Admin Table */
+.admin-table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background:#fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.admin-table th, .admin-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align:center;
+}
+
+.admin-table th {
+    background: #007BFF;
+    color: white;
+}
+
+.admin-table tr:hover {
+    background: #f1f1f1;
+}
+
+.delete-btn {
+    background: #FF4C4C;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.delete-btn:hover {
+    background: #FF1A1A;
+}
+
+.add-service-btn {
+    display: inline-block;
+    margin: 20px;
+    padding: 10px 20px;
+    background: #28A745;
+    color: white;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.add-service-btn:hover {
+    background: #1E7E34;
+}
+
+/* Forms */
+.service-form, .login-form, .booking-form {
+    margin: 30px auto;
+    width: 300px;
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.service-form input, .login-form input, .booking-form input, .booking-form select {
+    margin: 10px auto;
+    width: 90%;
 }
