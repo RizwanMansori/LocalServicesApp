@@ -2,21 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin Login</title>
+<title>Add New Service</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<header>Admin Login</header>
+<header>
+    Add New Service
+    <a href="{{ url_for('admin') }}" class="logout-btn">Back to Admin</a>
+</header>
 
-{% if error %}
-<p class="error">{{ error }}</p>
+{% if success %}
+<p class="success">Service "{{ service_name }}" added successfully!</p>
 {% endif %}
 
-<form method="post" action="{{ url_for('admin') }}">
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <button type="submit">Login</button>
+<form method="post" action="{{ url_for('add_service') }}">
+    <input type="text" name="name" placeholder="Service Name" required>
+    <input type="text" name="contact" placeholder="Service Contact Number" required>
+    <button type="submit">Add Service</button>
 </form>
 
 </body>
