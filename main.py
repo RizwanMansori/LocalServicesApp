@@ -1,7 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import urllib.parse
 
 app = Flask(__name__)
+app.secret_key = "supersecretkey"  # Admin login ke liye session
+
+# Admin credentials
+ADMIN_USER = "admin"
+ADMIN_PASS = "password123"
 
 # Services data
 services = [
@@ -31,27 +36,46 @@ def booking():
 
     bookings.append({"name": name, "phone": phone, "service": service, "address": address})
 
-    # WhatsApp notification link
+    # WhatsApp notification link (console)
     text = f"New Booking:\nName: {name}\nPhone: {phone}\nService: {service}\nAddress: {address}"
-    whatsapp_url = f"https://wa.me/919193626374?text={urllib.parse.quote(text)}"
+    whatsapp_url = f"https://wa.me/919876543210?text={urllib.parse.quote(text)}"
     print("WhatsApp URL:", whatsapp_url)
 
     return render_template("index.html", services=services, booking_success=True)
 
 # ---------------- Admin Panel ----------------
-@app.route("/admin")
+@app.route("/admin", methods=["GET", "POST"])
 def admin():
+    if request.method == "POST":
+        # Login attempt
+        username = request.form.get("username")
+        password = request.form.get("password")
+        if username == ADMIN_USER and password == ADMIN_PASS:
+            session["admin_logged_in"] = True
+            return redirect(url_for("admin"))
+        else:
+            return render_template("admin_login.html", error="Invalid credentials")
+
+    # Check if logged in
+    if not session.get("admin_logged_in"):
+        return render_template("admin_login.html")
+
     # Count bookings per service
-    service_count = {}
-    for s in services:
-        service_count[s['name']] = sum(1 for b in bookings if b['service'] == s['name'])
+    service_count = {s["name"]: sum(1 for b in bookings if b["service"] == s["name"]) for s in services}
     return render_template("admin.html", bookings=bookings, service_count=service_count)
 
 @app.route("/delete_booking/<int:index>")
 def delete_booking(index):
+    if not session.get("admin_logged_in"):
+        return redirect(url_for("admin"))
     if 0 <= index < len(bookings):
         bookings.pop(index)
-    return redirect(url_for('admin'))
+    return redirect(url_for("admin"))
+
+@app.route("/logout")
+def logout():
+    session.pop("admin_logged_in", None)
+    return redirect(url_for("admin"))
 
 if __name__ == "__main__":
     app.run(debug=True)
