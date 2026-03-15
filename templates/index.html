@@ -1,39 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Local Services App</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-
-<header>Local Services App</header>
-
-<h2>Available Services</h2>
-<div class="services">
-{% for service in services %}
-  <div class="card">
-    <img src="{{ url_for('static', filename='icons/' + service.name|lower + '.png') }}" alt="{{ service.name }}">
-    <h3>{{ service.name }}</h3>
-    <p>Contact: {{ service.contact }}</p>
-  </div>
-{% endfor %}
-</div>
-
-<h2>Book a Service</h2>
-<form method="post" action="/booking" class="booking-form">
-<input type="text" name="name" placeholder="Your Name" required>
-<input type="tel" name="phone" placeholder="Phone Number" required>
-<select name="service">
-{% for s in services %}
-  <option>{{ s.name }}</option>
-{% endfor %}
-</select>
-<input type="text" name="address" placeholder="Your Address" required>
-<button type="submit">Book Now</button>
-</form>
-
-<a href="https://wa.me/919193626374" class="whatsapp" target="_blank">WhatsApp</a>
-
-</body>
-</html>
+(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> from flask import Flask, render_template
+At line:1 char:1
++ from flask import Flask, render_template
++ ~~~~
+The 'from' keyword is not supported in this version of the language.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : ReservedKeywordNotAllowed
+ 
+(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> app = Flask(__name__)
+__name__ : The term '__name__' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if 
+a path was included, verify that the path is correct and try again.
+At line:1 char:13
++ app = Flask(__name__)
++             ~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (__name__:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> 
+(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> @app.route("/")
+At line:1 char:1
++ @app.route("/")
++ ~~~~
+The splatting operator '@' cannot be used to reference variables in an expression. '@app' can be used only as an argument to a command. To reference 
+variables in an expression use '$app'.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : SplattingNotPermitted
+ 
+(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> def home():
+At line:1 char:10
++ def home():
++          ~
+An expression was expected after '('.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : ExpectedExpression
+ 
+(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp>     return "Home page working!"
+Home page working!
+(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> 
+(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> @app.route("/admin")
+At line:1 char:1
++ @app.route("/admin")
++ ~~~~
+The splatting operator '@' cannot be used to reference variables in an expression. '@app' can be used only as an argument to a command. To reference 
+variables in an expression use '$app'.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : SplattingNotPermitted
+ 
+(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> def admin():
+At line:1 char:11
++ def admin():
++           ~
+An expression was expected after '('.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : ExpectedExpression
+ 
+(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp>     return "Admin page working!"
+Admin page working!
+(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> 
+(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> app.run(debug=True)
