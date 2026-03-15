@@ -1,59 +1,39 @@
-(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> from flask import Flask, render_template
-At line:1 char:1
-+ from flask import Flask, render_template
-+ ~~~~
-The 'from' keyword is not supported in this version of the language.
-    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
-    + FullyQualifiedErrorId : ReservedKeywordNotAllowed
- 
-(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> app = Flask(__name__)
-__name__ : The term '__name__' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if 
-a path was included, verify that the path is correct and try again.
-At line:1 char:13
-+ app = Flask(__name__)
-+             ~~~~~~~~
-    + CategoryInfo          : ObjectNotFound: (__name__:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
- 
-(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> 
-(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> @app.route("/")
-At line:1 char:1
-+ @app.route("/")
-+ ~~~~
-The splatting operator '@' cannot be used to reference variables in an expression. '@app' can be used only as an argument to a command. To reference 
-variables in an expression use '$app'.
-    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
-    + FullyQualifiedErrorId : SplattingNotPermitted
- 
-(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> def home():
-At line:1 char:10
-+ def home():
-+          ~
-An expression was expected after '('.
-    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
-    + FullyQualifiedErrorId : ExpectedExpression
- 
-(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp>     return "Home page working!"
-Home page working!
-(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> 
-(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> @app.route("/admin")
-At line:1 char:1
-+ @app.route("/admin")
-+ ~~~~
-The splatting operator '@' cannot be used to reference variables in an expression. '@app' can be used only as an argument to a command. To reference 
-variables in an expression use '$app'.
-    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
-    + FullyQualifiedErrorId : SplattingNotPermitted
- 
-(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> def admin():
-At line:1 char:11
-+ def admin():
-+           ~
-An expression was expected after '('.
-    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
-    + FullyQualifiedErrorId : ExpectedExpression
- 
-(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp>     return "Admin page working!"
-Admin page working!
-(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> 
-(.venv) PS C:\Users\ganpat g\Desktop\LocalServicesApp> app.run(debug=True)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Local Services App</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Local Services App</h1>
+</header>
+
+<section class="services-section">
+    <h2>Our Services</h2>
+    <div class="cards-container">
+        {% for service in services %}
+        <div class="service-card">
+            <img src="{{ url_for('static', filename='icons/' + service.name|lower + '.png') }}" alt="{{ service.name }}">
+            <h3>{{ service.name }}</h3>
+            <p>Contact: {{ service.contact }}</p>
+            <form action="/booking" method="POST">
+                <input type="hidden" name="service" value="{{ service.name }}">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="text" name="phone" placeholder="Phone" required>
+                <input type="text" name="address" placeholder="Address" required>
+                <button type="submit">Book Now</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% if booking_success %}
+<div class="success-message">Booking successfully sent!</div>
+{% endif %}
+
+</body>
+</html>
