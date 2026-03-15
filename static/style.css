@@ -12,7 +12,20 @@ header {
   font-size:28px;
   font-weight:bold;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.logout-btn {
+  background:#DC3545;
+  color:white;
+  padding:8px 12px;
+  border-radius:8px;
+  text-decoration:none;
+}
+
+.logout-btn:hover { background:#b02a37; }
 
 .services, .service-count {
   display:flex;
@@ -34,12 +47,6 @@ header {
 .card:hover, .count-card:hover {
   transform: translateY(-5px);
   box-shadow:0 12px 25px rgba(0,0,0,0.2);
-}
-
-.service-icon {
-  width:40px;
-  height:40px;
-  margin-bottom:10px;
 }
 
 button, .delete-btn {
@@ -83,7 +90,16 @@ input, textarea, select {
   border:1px solid #ccc;
 }
 
-.success { color:green; font-weight:bold; margin:10px 0; }
+.error {
+  color:red;
+  font-weight:bold;
+}
+
+.success { 
+  color:green; 
+  font-weight:bold; 
+  margin:10px 0; 
+}
 
 .whatsapp {
   position:fixed;
