@@ -72,7 +72,11 @@ def admin():
     if not session.get("admin_logged_in"):
         return render_template("admin_login.html")
 
-    service_count = {s["name"]: sum(1 for b in bookings if b["service"] == s["name"]) for s in services}
+    try:
+        service_count = {s["name"]: sum(1 for b in bookings if b["service"] == s["name"]) for s in services}
+    except Exception as e:
+        print("Admin route error:", e)
+        service_count = {}
 
     return render_template("admin.html", bookings=bookings, service_count=service_count, services=services)
 
