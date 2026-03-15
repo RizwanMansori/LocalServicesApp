@@ -18,7 +18,7 @@ services = [
     {"name": "AC Repair", "contact": "9876543213"}
 ]
 
-# JSON file for permanent bookings
+# JSON file for bookings
 BOOKING_FILE = "bookings.json"
 try:
     with open(BOOKING_FILE, "r") as f:
@@ -26,7 +26,7 @@ try:
 except:
     bookings = []
 
-# ---------------- Home Page ----------------
+# -------- Home Page --------
 @app.route("/")
 def home():
     return render_template("index.html", services=services)
@@ -35,7 +35,6 @@ def home():
 def contact():
     return render_template("index.html", services=services, success=True)
 
-# ---------------- Booking ----------------
 @app.route("/booking", methods=["POST"])
 def booking():
     name = request.form.get("name")
@@ -44,18 +43,17 @@ def booking():
     address = request.form.get("address")
 
     bookings.append({"name": name, "phone": phone, "service": service, "address": address})
-
     with open(BOOKING_FILE, "w") as f:
         json.dump(bookings, f)
 
-    # WhatsApp notification console
+    # WhatsApp notification (console)
     text = f"New Booking:\nName: {name}\nPhone: {phone}\nService: {service}\nAddress: {address}"
     whatsapp_url = f"https://wa.me/919876543210?text={urllib.parse.quote(text)}"
     print("WhatsApp URL:", whatsapp_url)
 
     return render_template("index.html", services=services, booking_success=True)
 
-# ---------------- Admin ----------------
+# -------- Admin Panel --------
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
     if request.method == "POST":
@@ -78,7 +76,7 @@ def logout():
     session.pop("admin_logged_in", None)
     return redirect(url_for("admin"))
 
-# ---------------- Delete Booking ----------------
+# -------- Delete Booking --------
 @app.route("/delete_booking/<int:index>")
 def delete_booking(index):
     if 0 <= index < len(bookings):
@@ -87,7 +85,7 @@ def delete_booking(index):
             json.dump(bookings, f)
     return redirect(url_for("admin"))
 
-# ---------------- Add Service ----------------
+# -------- Add Service --------
 @app.route("/add_service", methods=["GET", "POST"])
 def add_service():
     if not session.get("admin_logged_in"):
@@ -101,7 +99,7 @@ def add_service():
 
     return render_template("add_service.html")
 
-# ---------------- Remove Service ----------------
+# -------- Remove Service --------
 @app.route("/delete_service/<int:index>")
 def delete_service(index):
     if not session.get("admin_logged_in"):
@@ -111,7 +109,7 @@ def delete_service(index):
         services.pop(index)
     return redirect(url_for("admin"))
 
-# ---------------- Run App ----------------
+# -------- Run App --------
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
