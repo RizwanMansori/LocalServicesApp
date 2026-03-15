@@ -7,46 +7,41 @@
 </head>
 <body>
 
-<header>
-  Local Services App
-</header>
+<header>Local Services App</header>
 
 <h2>Available Services</h2>
 <div class="services">
-  {% for service in services %}
+{% for service in services %}
   <div class="card">
-    <img src="{{ url_for('static', filename='icons/' + service.name.lower().replace(' ', '_') + '.png') }}" alt="{{ service.name }}" class="service-icon">
+    <img src="{{ url_for('static', filename='icons/' + service.name|lower + '.png') }}" alt="{{ service.name }}">
     <h3>{{ service.name }}</h3>
     <p>Contact: {{ service.contact }}</p>
   </div>
-  {% endfor %}
+{% endfor %}
 </div>
 
 <h2>Contact Us</h2>
 {% if success %}
-<p class="success">Your message has been sent!</p>
+<p class="success-msg">Your message has been sent!</p>
 {% endif %}
 <form method="post" action="/contact">
-  <input type="text" name="name" placeholder="Your Name" required>
-  <input type="email" name="email" placeholder="Your Email" required>
-  <textarea name="message" placeholder="Message" required></textarea>
-  <button type="submit">Send</button>
+<input type="text" name="name" placeholder="Your Name" required>
+<input type="email" name="email" placeholder="Your Email" required>
+<textarea name="message" placeholder="Message" required></textarea>
+<button type="submit">Send</button>
 </form>
 
 <h2>Book a Service</h2>
-{% if booking_success %}
-<p class="success">Booking Successful!</p>
-{% endif %}
 <form method="post" action="/booking">
-  <input type="text" name="name" placeholder="Your Name" required>
-  <input type="tel" name="phone" placeholder="Phone Number" required>
-  <select name="service">
-    {% for service in services %}
-    <option>{{ service.name }}</option>
-    {% endfor %}
-  </select>
-  <input type="text" name="address" placeholder="Your Address" required>
-  <button type="submit">Book Now</button>
+<input type="text" name="name" placeholder="Your Name" required>
+<input type="tel" name="phone" placeholder="Phone Number" required>
+<select name="service">
+{% for s in services %}
+  <option>{{ s.name }}</option>
+{% endfor %}
+</select>
+<input type="text" name="address" placeholder="Your Address" required>
+<button type="submit">Book Now</button>
 </form>
 
 <a href="https://wa.me/919193626374" class="whatsapp" target="_blank">WhatsApp</a>
