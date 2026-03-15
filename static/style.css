@@ -14,7 +14,7 @@ header {
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.services {
+.services, .service-count {
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
@@ -22,16 +22,16 @@ header {
   margin:20px;
 }
 
-.card {
+.card, .count-card {
   background:white;
   width:200px;
-  padding:20px;
+  padding:15px;
   border-radius:15px;
   box-shadow:0 8px 20px rgba(0,0,0,0.1);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.card:hover {
+.card:hover, .count-card:hover {
   transform: translateY(-5px);
   box-shadow:0 12px 25px rgba(0,0,0,0.2);
 }
@@ -42,22 +42,36 @@ header {
   margin-bottom:10px;
 }
 
-button {
-  padding:10px 20px;
-  background:#007BFF;
-  color:white;
+button, .delete-btn {
+  padding:8px 12px;
   border:none;
   border-radius:8px;
   cursor:pointer;
-  transition: background 0.3s;
+  text-decoration:none;
+  color:white;
 }
 
-button:hover {
-  background:#0056b3;
+button { background:#007BFF; }
+button:hover { background:#0056b3; }
+
+.delete-btn { background:#DC3545; }
+.delete-btn:hover { background:#b02a37; }
+
+table {
+  margin:auto;
+  border-collapse:collapse;
+  width:90%;
+  margin-bottom:50px;
 }
 
-form {
-  margin:20px;
+th, td {
+  border:1px solid #ccc;
+  padding:10px;
+}
+
+th {
+  background:#007BFF;
+  color:white;
 }
 
 input, textarea, select {
@@ -69,11 +83,7 @@ input, textarea, select {
   border:1px solid #ccc;
 }
 
-.success {
-  color:green;
-  font-weight:bold;
-  margin:10px 0;
-}
+.success { color:green; font-weight:bold; margin:10px 0; }
 
 .whatsapp {
   position:fixed;
@@ -88,14 +98,15 @@ input, textarea, select {
 }
 
 @media(max-width:600px){
-  .services {
+  .services, .service-count {
     flex-direction:column;
     align-items:center;
   }
-  .card {
+  .card, .count-card {
     width:80%;
   }
   input, textarea, select {
     width:80%;
   }
+  table { width:100%; font-size:14px; }
 }
