@@ -7,49 +7,49 @@
 </head>
 <body>
 
-<h1 style="color:#007BFF;">Admin Panel</h1>
+<header>Admin Panel</header>
 <a href="/logout" class="logout-btn">Logout</a>
 
-<h2 style="color:#FF6F61;">Bookings</h2>
-<table class="bookings-table">
+<h2>Bookings</h2>
+<table class="admin-table">
 <tr>
-  <th>Name</th>
-  <th>Phone</th>
-  <th>Service</th>
-  <th>Address</th>
-  <th>Action</th>
+<th>Name</th>
+<th>Phone</th>
+<th>Service</th>
+<th>Address</th>
+<th>Action</th>
 </tr>
 {% for b in bookings %}
 <tr>
-  <td>{{ b.name }}</td>
-  <td>{{ b.phone }}</td>
-  <td>{{ b.service }}</td>
-  <td>{{ b.address }}</td>
-  <td><a href="{{ url_for('delete_booking', index=loop.index0) }}" class="delete-btn">Delete</a></td>
+<td>{{ b.name }}</td>
+<td>{{ b.phone }}</td>
+<td>{{ b.service }}</td>
+<td>{{ b.address }}</td>
+<td><a href="{{ url_for('delete_booking', index=loop.index0) }}" class="delete-btn">Delete</a></td>
 </tr>
 {% endfor %}
 </table>
 
-<h2 style="color:#FFB400;">Services</h2>
-<table class="services-table">
+<h2>Services</h2>
+<table class="admin-table">
 <tr>
-  <th>Service Name</th>
-  <th>Contact</th>
-  <th>Action</th>
+<th>Service Name</th>
+<th>Contact</th>
+<th>Action</th>
 </tr>
 {% for s in services %}
 <tr>
-  <td>{{ s.name }}</td>
-  <td>{{ s.contact }}</td>
-  <td><a href="{{ url_for('delete_service', index=loop.index0) }}" class="delete-btn">Remove</a></td>
+<td>{{ s.name }}</td>
+<td>{{ s.contact }}</td>
+<td><a href="{{ url_for('delete_service', index=loop.index0) }}" class="delete-btn">Remove</a></td>
 </tr>
 {% endfor %}
 </table>
 
-<h2 style="color:#FFB400;">Service-wise Booking Count</h2>
+<h2>Service-wise Booking Count</h2>
 <ul>
 {% for service, count in service_count.items() %}
-  <li>{{ service }}: {{ count }} bookings</li>
+<li>{{ service }}: {{ count }} bookings</li>
 {% endfor %}
 </ul>
 
