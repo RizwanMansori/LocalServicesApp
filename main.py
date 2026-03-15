@@ -1,15 +1,16 @@
 import os
+import json
 from flask import Flask, render_template, request, redirect, url_for, session
 import urllib.parse
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"  # Admin session के लिए जरूरी
+app.secret_key = "supersecretkey"  # Admin session ke liye
 
 # Admin credentials
 ADMIN_USER = "admin"
 ADMIN_PASS = "password123"
 
-# Services and bookings
+# Services
 services = [
     {"name": "Electrician", "contact": "9876543210"},
     {"name": "Plumber", "contact": "9876543211"},
@@ -17,7 +18,15 @@ services = [
     {"name": "AC Repair", "contact": "9876543213"}
 ]
 
-bookings = []
+# JSON file for permanent booking storage
+BOOKING_FILE = "bookings.json"
+
+# Load bookings from JSON
+try:
+    with open(BOOKING_FILE, "r") as f:
+        bookings = json.load(f)
+except:
+    bookings = []
 
 # ---------------- Home Page ----------------
 @app.route("/")
@@ -38,6 +47,10 @@ def booking():
     address = request.form.get("address")
 
     bookings.append({"name": name, "phone": phone, "service": service, "address": address})
+
+    # Save to JSON
+    with open(BOOKING_FILE, "w") as f:
+        json.dump(bookings, f)
 
     # WhatsApp notification (console)
     text = f"New Booking:\nName: {name}\nPhone: {phone}\nService: {service}\nAddress: {address}"
@@ -61,7 +74,6 @@ def admin():
     if not session.get("admin_logged_in"):
         return render_template("admin_login.html")
 
-    # Count bookings per service
     service_count = {s["name"]: sum(1 for b in bookings if b["service"] == s["name"]) for s in services}
     return render_template("admin.html", bookings=bookings, service_count=service_count)
 
@@ -75,6 +87,9 @@ def logout():
 def delete_booking(index):
     if 0 <= index < len(bookings):
         bookings.pop(index)
+        # Update JSON file
+        with open(BOOKING_FILE, "w") as f:
+            json.dump(bookings, f)
     return redirect(url_for("admin"))
 
 # ---------------- Add Service ----------------
