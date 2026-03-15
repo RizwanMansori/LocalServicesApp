@@ -1,32 +1,18 @@
-from flask import Flask, render_template, request, redirect, session
-import sqlite3
+from flask import Flask, render_template, request
+import urllib.parse
 
 app = Flask(__name__)
-app.secret_key = "secret"
 
+# Services data
 services = [
-    {"name": "Electrician", "contact": "999111222"},
-    {"name": "Plumber", "contact": "999333444"},
-    {"name": "Carpenter", "contact": "999555666"},
+    {"name": "Electrician", "contact": "9876543210"},
+    {"name": "Plumber", "contact": "9876543211"},
+    {"name": "Carpenter", "contact": "9876543212"},
+    {"name": "AC Repair", "contact": "9876543213"}
 ]
 
-# Initialize DB
-def init_db():
-    conn = sqlite3.connect("bookings.db")
-    c = conn.cursor()
-    c.execute("""
-        CREATE TABLE IF NOT EXISTS bookings (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            phone TEXT,
-            service TEXT,
-            address TEXT
-        )
-    """)
-    conn.commit()
-    conn.close()
-
-init_db()
+# Booking storage
+bookings = []
 
 @app.route("/")
 def home():
@@ -40,53 +26,14 @@ def contact():
 def booking():
     name = request.form["name"]
     phone = request.form["phone"]
-    service_name = request.form["service"]
+    service = request.form["service"]
     address = request.form["address"]
 
-    conn = sqlite3.connect("bookings.db")
-    c = conn.cursor()
-    c.execute("INSERT INTO bookings (name, phone, service, address) VALUES (?, ?, ?, ?)",
-              (name, phone, service_name, address))
-    conn.commit()
-    conn.close()
+    bookings.append({"name": name, "phone": phone, "service": service, "address": address})
 
-    # Optionally: WhatsApp URL trigger
+    # WhatsApp notification link
+    text = f"New Booking:\nName: {name}\nPhone: {phone}\nService: {service}\nAddress: {address}"
+    whatsapp_url = f"https://wa.me/919876543210?text={urllib.parse.quote(text)}"
+    print("WhatsApp URL:", whatsapp_url)
+
     return render_template("index.html", services=services, booking_success=True)
-
-@app.route("/login", methods=["GET","POST"])
-def login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        if username == "admin" and password == "1234":
-            session["admin"] = True
-            return redirect("/admin")
-    return render_template("login.html")
-
-@app.route("/admin")
-def admin():
-    if not session.get("admin"):
-        return redirect("/login")
-    conn = sqlite3.connect("bookings.db")
-    c = conn.cursor()
-    c.execute("SELECT * FROM bookings")
-    bookings = c.fetchall()
-
-    c.execute("SELECT service, COUNT(*) FROM bookings GROUP BY service")
-    counts = c.fetchall()
-    conn.close()
-    return render_template("admin.html", bookings=bookings, counts=counts)
-
-@app.route("/delete/<int:id>")
-def delete_booking(id):
-    if not session.get("admin"):
-        return redirect("/login")
-    conn = sqlite3.connect("bookings.db")
-    c = conn.cursor()
-    c.execute("DELETE FROM bookings WHERE id=?", (id,))
-    conn.commit()
-    conn.close()
-    return redirect("/admin")
-
-if __name__ == "__main__":
-    app.run(debug=True)
