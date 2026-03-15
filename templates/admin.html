@@ -7,11 +7,11 @@
 </head>
 <body>
 
-<h1>Admin Panel</h1>
+<h1 style="color:#007BFF;">Admin Panel</h1>
 <a href="/logout" class="logout-btn">Logout</a>
 
-<h2>Bookings</h2>
-<table>
+<h2 style="color:#FF6F61;">Bookings</h2>
+<table class="bookings-table">
 <tr>
   <th>Name</th>
   <th>Phone</th>
@@ -30,7 +30,7 @@
 {% endfor %}
 </table>
 
-<h2>Service-wise Booking Count</h2>
+<h2 style="color:#FFB400;">Service-wise Booking Count</h2>
 <ul>
 {% for service, count in service_count.items() %}
   <li>{{ service }}: {{ count }} bookings</li>
