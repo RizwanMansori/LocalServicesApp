@@ -60,6 +60,7 @@ def booking():
 # ---------------- Admin Panel ----------------
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
+    # POST → login form submit
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -69,15 +70,12 @@ def admin():
         else:
             return render_template("admin_login.html", error="Invalid credentials")
 
+    # GET → check login
     if not session.get("admin_logged_in"):
         return render_template("admin_login.html")
 
-    try:
-        service_count = {s["name"]: sum(1 for b in bookings if b["service"] == s["name"]) for s in services}
-    except Exception as e:
-        print("Admin route error:", e)
-        service_count = {}
-
+    # Show admin panel
+    service_count = {s["name"]: sum(1 for b in bookings if b["service"] == s["name"]) for s in services}
     return render_template("admin.html", bookings=bookings, service_count=service_count, services=services)
 
 @app.route("/logout")
