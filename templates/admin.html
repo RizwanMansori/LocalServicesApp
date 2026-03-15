@@ -2,44 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin Panel</title>
+<title>Admin Login</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<header>Admin Panel - Bookings</header>
+<header>Admin Login</header>
 
-<h2>Service-wise Booking Count</h2>
-<div class="service-count">
-{% for name, count in service_count.items() %}
-    <div class="count-card">
-        <h3>{{ name }}</h3>
-        <p>{{ count }} booking(s)</p>
-    </div>
-{% endfor %}
-</div>
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
 
-<h2>All Bookings</h2>
-<table>
-<tr>
-<th>#</th>
-<th>Name</th>
-<th>Phone</th>
-<th>Service</th>
-<th>Address</th>
-<th>Action</th>
-</tr>
-{% for b in bookings %}
-<tr>
-<td>{{ loop.index }}</td>
-<td>{{ b.name }}</td>
-<td>{{ b.phone }}</td>
-<td>{{ b.service }}</td>
-<td>{{ b.address }}</td>
-<td><a href="{{ url_for('delete_booking', index=loop.index0) }}" class="delete-btn">Delete</a></td>
-</tr>
-{% endfor %}
-</table>
+<form method="post" action="{{ url_for('admin') }}">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+</form>
 
 </body>
 </html>
