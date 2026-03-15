@@ -7,15 +7,19 @@
 </head>
 <body>
 
-<h1>Admin Login</h1>
+<header>Admin Login</header>
+
 {% if error %}
-<p class="error">{{ error }}</p>
+<p class="error-msg">{{ error }}</p>
 {% endif %}
-<form method="post" action="/admin">
-  <input type="text" name="username" placeholder="Username" required>
-  <input type="password" name="password" placeholder="Password" required>
-  <button type="submit">Login</button>
+
+<form method="post" action="/admin" class="login-form">
+<input type="text" name="username" placeholder="Username" required>
+<input type="password" name="password" placeholder="Password" required>
+<button type="submit">Login</button>
 </form>
+
+<a href="/" class="logout-btn">Back to Home</a>
 
 </body>
 </html>
