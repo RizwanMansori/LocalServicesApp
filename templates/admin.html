@@ -30,6 +30,22 @@
 {% endfor %}
 </table>
 
+<h2 style="color:#FFB400;">Services</h2>
+<table class="services-table">
+<tr>
+  <th>Service Name</th>
+  <th>Contact</th>
+  <th>Action</th>
+</tr>
+{% for s in services %}
+<tr>
+  <td>{{ s.name }}</td>
+  <td>{{ s.contact }}</td>
+  <td><a href="{{ url_for('delete_service', index=loop.index0) }}" class="delete-btn">Remove</a></td>
+</tr>
+{% endfor %}
+</table>
+
 <h2 style="color:#FFB400;">Service-wise Booking Count</h2>
 <ul>
 {% for service, count in service_count.items() %}
