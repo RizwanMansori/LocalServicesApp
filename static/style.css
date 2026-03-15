@@ -3,64 +3,80 @@ body {
     background: #f0f8ff;
     text-align: center;
     margin: 0;
-    padding: 0;
 }
 
 header {
     background: #007BFF;
     color: white;
-    padding: 20px;
-    font-size: 26px;
-}
-
-h1, h2 {
-    margin-top: 20px;
-}
-
-.bookings-table {
-    margin: 20px auto;
-    border-collapse: collapse;
-    width: 90%;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.bookings-table th {
-    background: linear-gradient(90deg, #FF6F61, #FFB400);
-    color: white;
-    padding: 12px;
-    text-transform: uppercase;
-}
-
-.bookings-table td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-}
-
-.bookings-table tr:hover {
-    background: #f2f2f2;
-}
-
-.delete-btn {
-    background: #FF4C4C;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 5px;
-    text-decoration: none;
-}
-
-.logout-btn, .add-service-btn {
-    display: inline-block;
-    margin: 10px;
-    padding: 10px 20px;
-    background: #007BFF;
-    color: white;
-    border-radius: 5px;
-    text-decoration: none;
+    padding: 25px;
+    font-size: 28px;
     font-weight: bold;
 }
 
-.logout-btn:hover, .add-service-btn:hover, .delete-btn:hover {
-    opacity: 0.8;
+.services {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin: 20px;
+}
+
+.card {
+    background: #fff;
+    width: 200px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+}
+
+.card img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 25px;
+    background: #FF6F61;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #FF3B2E;
+}
+
+input, textarea, select {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 260px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.success-msg {
+    color: green;
+    font-weight: bold;
+}
+
+.whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #25D366;
+    color: white;
+    padding: 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
 }
