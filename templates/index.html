@@ -20,19 +20,8 @@
 {% endfor %}
 </div>
 
-<h2>Contact Us</h2>
-{% if success %}
-<p class="success-msg">Your message has been sent!</p>
-{% endif %}
-<form method="post" action="/contact">
-<input type="text" name="name" placeholder="Your Name" required>
-<input type="email" name="email" placeholder="Your Email" required>
-<textarea name="message" placeholder="Message" required></textarea>
-<button type="submit">Send</button>
-</form>
-
 <h2>Book a Service</h2>
-<form method="post" action="/booking">
+<form method="post" action="/booking" class="booking-form">
 <input type="text" name="name" placeholder="Your Name" required>
 <input type="tel" name="phone" placeholder="Phone Number" required>
 <select name="service">
